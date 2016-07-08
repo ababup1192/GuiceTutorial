@@ -1,14 +1,16 @@
 import com.google.inject.{AbstractModule, Guice}
-import org.ababup1192.GuiceMain
+import org.ababup1192.{GuiceMain, JapaneseSpeaker, Speaker}
 import org.scalatest._
 
 class GuiceSpec extends FlatSpec with Matchers {
-  "GuiceMain" should "have HelloWorld Instance" in {
+  "GuiceMain" should "have JapaneseSpeaker Instance" in {
     val injector = Guice.createInjector(new AbstractModule {
-      override def configure(): Unit = {}
+      override def configure(): Unit = {
+        bind(classOf[Speaker]).to(classOf[JapaneseSpeaker])
+      }
     })
 
     val main = injector.getInstance(classOf[GuiceMain])
-    main.helloWorld.hello() should === ("Hello Google Guice")
+    main.speaker.thankYou() should ===("ありがとう")
   }
 }
