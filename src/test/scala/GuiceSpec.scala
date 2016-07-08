@@ -1,13 +1,13 @@
-import com.google.inject.{AbstractModule, Guice}
+import com.google.inject.{AbstractModule, Guice, Provides}
 import org.ababup1192._
 import org.scalatest._
 
 class GuiceSpec extends FlatSpec with Matchers {
   "GuiceMain" should "have User Instance" in {
     val injector = Guice.createInjector(new AbstractModule {
-      override def configure(): Unit = {
-        bind(classOf[User]).toInstance(new User("Bob"))
-      }
+      override def configure(): Unit = {}
+      @Provides
+      private[this] def provideUser(): User = new User("Bob")
     })
 
     val main = injector.getInstance(classOf[GuiceMain])
